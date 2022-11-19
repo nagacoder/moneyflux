@@ -16,7 +16,8 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "format": "prettier --write --ignore-unknown"
+    "format": "prettier --write --ignore-unknown",
+    "codegen": "graphql-codegen --config graphql.config.yaml --errors-only"
   },
   "prettier": {
     "endOfLine": "auto",
@@ -32,6 +33,10 @@
     "@chakra-ui/react": "^2.4.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@graphql-codegen/cli": "^2.13.12",
+    "@graphql-codegen/typescript-operations": "^2.5.7",
+    "@graphql-codegen/typescript-react-query": "^4.0.5",
+    "@tanstack/react-query": "^4.16.1",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
@@ -39,6 +44,8 @@
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
     "framer-motion": "^6",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
     "next": "13.0.4",
     "prettier": "^2.7.1",
     "react": "18.2.0",

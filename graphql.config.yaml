@@ -1,0 +1,14 @@
+schema:
+  - http://localhost:3000/admin/api
+generates:
+  __generated__/graphql.ts:
+    documents:
+      - "queries/*.ts"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-query"
+    config:
+      fetcher:
+        func: "../fetcher#fetchData"
+        isReactHook: false
