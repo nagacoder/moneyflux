@@ -24,7 +24,7 @@ export default function Footer() {
           className={`nav-item ${pathname === '/table' ? 'active' : ''}`}
         >
           <Plus size={24} />
-          <span className="nav-label">Add d</span>
+          <span className="nav-label">Add</span>
         </div>
         <Link 
           href="/settings" 
