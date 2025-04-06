@@ -17,7 +17,6 @@ export function useExpenses() {
     assignCategoryColors
   } = useAppContext();
 
-  const response ={"status":"success","data":[{"id":"TXN-1743929483288","date":"2025-04-01T08:51:22.000Z","type":"expense","category":"Makanan","amount":191000,"description":"Rechesee","created at":"2025-04-06T08:51:23.288Z","updated at":"2025-04-06T08:51:23.288Z"},{"id":"TXN-1743929522152","date":"2025-04-02T08:52:01.000Z","type":"expense","category":"Groceries","amount":254390,"description":"Belanja bulanan","created at":"2025-04-06T08:52:02.152Z","updated at":"2025-04-06T08:52:02.152Z"},{"id":"TXN-1743929553050","date":"2025-04-03T08:52:31.000Z","type":"expense","category":"Aqua Galon","amount":46000,"description":"Air galon","created at":"2025-04-06T08:52:33.050Z","updated at":"2025-04-06T08:52:33.050Z"},{"id":"TXN-1743929581292","date":"2025-04-05T08:53:00.000Z","type":"expense","category":"Transportasi","amount":26000,"description":"Gojek","created at":"2025-04-06T08:53:01.292Z","updated at":"2025-04-06T08:53:01.292Z"},{"id":"TXN-1743929615757","date":"2025-04-04T08:53:34.000Z","type":"expense","category":"Groceries","amount":139890,"description":"Belanja bulanan","created at":"2025-04-06T08:53:35.758Z","updated at":"2025-04-06T08:53:35.758Z"},{"id":"TXN-1743929682259","date":"2025-04-05T08:54:40.000Z","type":"expense","category":"Lain-Lain","amount":35000,"description":"Cukur","created at":"2025-04-06T08:54:42.259Z","updated at":"2025-04-06T08:54:42.259Z"}]}
   
   const [monthExpenses, setMonthExpenses] = useState<Transaction[]>([]);
   const [categoryData, setCategoryData] = useState<CategoryData[]>([]);
@@ -31,13 +30,42 @@ export function useExpenses() {
     
     try {
       const { start, end } = getMonthBounds(currentDate);
-      const transactions = response.data as Transaction[]
-    //   const transactions = await getTransactions(
-    //     apiKey,
-    //     formatDate(start),
-    //     formatDate(end),
-    //     'expense'
-    //   );
+      // const transactions = response.data as Transaction[]
+      const transactions = await getTransactions(
+        apiKey,
+        formatDate(start),
+        formatDate(end),
+        'expense'
+      );
+      
+      setExpenses(transactions);
+      
+      // Get unique categories for color assignment
+      const uniqueCategories = [...new Set(transactions.map(exp => exp.category))];
+      assignCategoryColors(uniqueCategories);
+    } catch (err) {
+      console.error('Error fetching expenses:', err);
+      setError('Failed to load expenses. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const createTransaction = async (): Promise<void> => {
+    if (!apiKey) return;
+    
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const { start, end } = getMonthBounds(currentDate);
+      // const transactions = response.data as Transaction[]
+      const transactions = await getTransactions(
+        apiKey,
+        formatDate(start),
+        formatDate(end),
+        'expense'
+      );
       
       setExpenses(transactions);
       

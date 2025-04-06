@@ -6,13 +6,13 @@ import { getISODateWithLocalTime, formatDateForInput } from '@/lib/utils';
 import { createTransaction } from '@/lib/api';
 import { ExpenseFormData, NotificationMessage, Category } from '@/types';
 
-interface SetupPinProps {
-
+interface TransactionFormProps {
+ onSuccess:()=>void
 }
 
-export default function TransactionForm() {
+export default function TransactionForm({onSuccess}:TransactionFormProps) {
     const [isPinModalOpen, setIsPinModalOpen] = useState<boolean>(true);
-    const { apiKey, categories } = useAppContext();
+    const { apiKey, categories,setIsLoading } = useAppContext();
     const [formData, setFormData] = useState<ExpenseFormData>({
         name: '',
         category: '',
@@ -34,8 +34,10 @@ export default function TransactionForm() {
     };
 
     // Handle form submission
-    const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-        e.preventDefault();
+    const handleSubmit = async (): Promise<void> => {
+        setIsPinModalOpen(false)
+        setIsLoading(true)
+       
 
         if (!apiKey) {
             setMessage({ text: 'Please set up your PIN first', type: 'error' });
@@ -71,6 +73,7 @@ export default function TransactionForm() {
 
         // Clear message after 3 seconds
         setTimeout(() => {
+            onSuccess()
             setMessage({ text: '', type: '' });
         }, 3000);
     };
@@ -87,7 +90,7 @@ export default function TransactionForm() {
         isOpen={isPinModalOpen}
         title='Add Transaction'
         onClose={() => setIsPinModalOpen(false)}
-        onConfirm={() => setIsPinModalOpen(false)}
+        onConfirm={() => handleSubmit()}
     >
         <div className="form-container">
             <form id="expenseForm" className="expense-form" onSubmit={handleSubmit}>
@@ -155,8 +158,6 @@ export default function TransactionForm() {
                         required
                     />
                 </div>
-
-                <button type="submit" className="nav-button">Submit</button>
             </form>
 
             {message.text && (

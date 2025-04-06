@@ -30,6 +30,17 @@ export interface Transaction {
     amount: string;
     date: string;
   }
+
+  export interface CreateTransactionPayload{
+    apiKey: string, 
+    data: {
+      type: 'expense' | 'income';
+      amount: number;
+      category: string;
+      date: string;
+      description: string;
+    }
+  }
   
   // API responses
   export interface ApiResponse<T> {

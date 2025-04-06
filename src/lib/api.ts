@@ -96,3 +96,38 @@ export async function createTransaction(
     throw error;
   }
 }
+
+
+// Create a new transaction
+export async function deleteTransaction(
+  id: string, 
+  apiKey:string
+  
+): Promise<ApiResponse<any>> {
+  try {
+    const request = {
+      action: "deleteTransaction",
+      apiKey,
+      id
+    };
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const error: ApiResponse<any> = await response.json();
+      throw new Error(error.error || 'Failed to add transaction');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating transaction:', error);
+    throw error;
+  }
+}

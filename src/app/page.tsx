@@ -7,6 +7,7 @@ import { useCategories } from '@/hooks/useCategories';
 import Header from '@/components/Footer';
 import Summary from '@/components/Summary'
 import Loader from '@/components/Loader';
+import { deleteTransaction } from '@/lib/api'
 import MonthNavigation from '@/components/MonthNavigation';
 import PieChart from '@/components/PieChart';
 import CategoryLegend from '@/components/CategoryLegend';
@@ -15,23 +16,26 @@ import SetPin from '@/components/SetupPin';
 import TransactionList from '@/components/TransactionList'
 import DeleteTransaction from '@/components/DeleteTransaction';
 export default function Dashboard() {
-    const { isLoading, isNewTransactionModalOpen, apiKey } = useAppContext();
+    const { isLoading, isNewTransactionModalOpen, apiKey,setIsLoading } = useAppContext();
     const [isPinModalOpen, setIsPinModalOpen] = useState<boolean>(false);
-    const [isShowTransactionForm, setSsShowTransactionForm] = useState<boolean>(false);
+    const [isShowDeleteConfirmation, setSsShowDeleteConfirmation] = useState<boolean>(false);
+    const [transactionId, setTransactionId] = useState<string>('')
+    const [isShowTransactionForm, setSShowTransactionForm] = useState<boolean>(false);
     const { monthExpenses, categoryData, fetchExpenses, error: expensesError } = useExpenses();
     const { fetchCategories, error: categoriesError } = useCategories();
 
     // Open PIN modal if no API key is found
-    // useEffect(() => {
-    //     if (apiKey === null) {
-    //         setIsPinModalOpen(false);
-    //     }
-    // }, [apiKey]);
+    useEffect(() => {
+        if (apiKey === null) {
+            setIsPinModalOpen(true);
+        } else {
+            setIsPinModalOpen(false);
+        }
+    }, [apiKey]);
 
 
     useEffect(() => {
-        console.log('isNewTransactionModalOpen',isNewTransactionModalOpen)
-        setSsShowTransactionForm(isNewTransactionModalOpen);
+        setSShowTransactionForm(isNewTransactionModalOpen);
     }, [isNewTransactionModalOpen]);
 
     // Fetch data on initial load
@@ -62,6 +66,15 @@ export default function Dashboard() {
         }
     };
 
+    const handleTransactionDeletion = async () => {
+        if (apiKey) {
+            setIsLoading(true)
+            await deleteTransaction(transactionId,apiKey)
+            await fetchExpenses();
+            setTransactionId('')
+        }
+    }
+
     return (
         <div className="container">
             <Summary />
@@ -78,13 +91,16 @@ export default function Dashboard() {
             </div>
 
             <div>
-                <TransactionList transactions={monthExpenses} openDeleteModal={(id)=> console.log(id)}/>
+                <TransactionList transactions={monthExpenses} openDeleteModal={(id) => {
+                    setSsShowDeleteConfirmation(true)
+                    setTransactionId(id)
+                }} />
             </div>
 
-            {isNewTransactionModalOpen && <TransactionForm />}
-            <DeleteTransaction />
+            {isShowTransactionForm && <TransactionForm onSuccess={() => handleTransactionAdded()} />}
+            {isShowDeleteConfirmation && <DeleteTransaction onSuccess={() => handleTransactionDeletion()} />}
 
-            <SetPin />
+            {isPinModalOpen && <SetPin isOpen={isPinModalOpen} />}
 
             {(expensesError || categoriesError) && (
                 <div className="error-message">
