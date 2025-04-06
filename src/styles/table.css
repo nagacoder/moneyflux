@@ -1,0 +1,58 @@
+/* Table styles */
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
+  .transactions-table {
+    width: 100%;
+    min-width: 650px; /* Ensures table has a minimum width that forces scrolling on mobile */
+    border-collapse: collapse;
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .transactions-table th,
+  .transactions-table td {
+    padding: 12px 15px; /* Add some padding for better readability */
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap; /* Prevents text wrapping in cells */
+  }
+  
+  .transactions-table th {
+    background-color: var(--bg-primary);
+    color: var(--accent);
+    font-weight: 600;
+    position: sticky; /* Optional: Makes headers sticky while scrolling */
+    top: 0;
+  }
+  
+  .transactions-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Optional: Style for the delete button */
+  .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--accent);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Optional: Row styling based on transaction type */
+  .income-row {
+    background-color: rgba(0, 128, 0, 0.05); /* Subtle green tint for income */
+  }
+  
+  .expense-row {
+    background-color: rgba(255, 0, 0, 0.05); /* Subtle red tint for expense */
+  }
