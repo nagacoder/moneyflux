@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { useExpenses } from '@/hooks/useExpenses';
 import { useCategories } from '@/hooks/useCategories';
-import Header from '@/components/Footer';
 import Summary from '@/components/Summary'
 import Loader from '@/components/Loader';
 import { deleteTransaction } from '@/lib/api'

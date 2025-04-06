@@ -37,10 +37,6 @@ export default function CategoryLegend({ categoryData, monthExpenses }: Category
   });
   
   // Calculate totals
-  const totalExpenses = monthExpenses.reduce((sum, exp) => sum + exp.amount, 0);
-  const totalWithoutRent = monthExpenses
-    .filter(exp => exp.category !== 'Rent')
-    .reduce((sum, exp) => sum + exp.amount, 0);
   
   return (
     <div className="legend-box" id="customLegend">
