@@ -1,5 +1,6 @@
 'use client';
 import {Trash2} from 'lucide-react'
+import { formatCurrency } from '@/lib/utils';
 import {Transaction} from '@/types'
 
 interface TransactionListProps {
@@ -29,7 +30,7 @@ export default function TransactionList({transactions,openDeleteModal}:Transacti
                             <td>{item.description}</td>
                             <td>{item.category}</td>
                             <td>{item.type === 'income' ? 'Income' : 'Expense'}</td>
-                            <td>${item.amount.toFixed(2)}</td>
+                            <td>{formatCurrency(item.amount)}</td>
                             <td>{new Date(item.date).toLocaleDateString()}</td>
                             <td>
                                 <button onClick={() => openDeleteModal(item.id || '')} className="delete-btn">

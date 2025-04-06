@@ -17,6 +17,7 @@ export default function MonthNavigation({ onMonthChange }: MonthNavigationProps)
       currentDate.getMonth() - 1,
       1
     );
+    
     setCurrentDate(newDate);
     if (onMonthChange) onMonthChange(newDate);
   };

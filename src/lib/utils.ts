@@ -2,7 +2,7 @@ import { Transaction, CategoryData } from '@/types';
 
 // Format currency with the appropriate symbol
 export function formatCurrency(amount: number, currencySymbol: string = 'Rp'): string {
-  const formattedAmount = new Intl.NumberFormat('en-US', { 
+  const formattedAmount = new Intl.NumberFormat('id-ID', { 
     minimumFractionDigits: 2, 
     maximumFractionDigits: 2 
   }).format(amount);
@@ -13,7 +13,7 @@ export function formatCurrency(amount: number, currencySymbol: string = 'Rp'): s
   if (postfixCurrencies.has(currencySymbol)) {
     return `${formattedAmount} ${currencySymbol}`;
   }
-  return `${currencySymbol} ${formattedAmount}`;
+  return `${currencySymbol}${formattedAmount}`;
 }
 
 // Format a date as YYYY-MM-DD

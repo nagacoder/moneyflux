@@ -21,7 +21,7 @@ export default function Dashboard() {
     const [isShowDeleteConfirmation, setSsShowDeleteConfirmation] = useState<boolean>(false);
     const [transactionId, setTransactionId] = useState<string>('')
     const [isShowTransactionForm, setSShowTransactionForm] = useState<boolean>(false);
-    const { monthExpenses, categoryData, fetchExpenses, error: expensesError } = useExpenses();
+    const { monthExpenses,monthTransactions,incomes, categoryData, fetchExpenses, error: expensesError } = useExpenses();
     const { fetchCategories, error: categoriesError } = useCategories();
 
     // Open PIN modal if no API key is found
@@ -53,9 +53,9 @@ export default function Dashboard() {
     }, [apiKey]);
 
     // Handle month change
-    const handleMonthChange = async () => {
+    const handleMonthChange = async (date:Date) => {
         if (apiKey) {
-            await fetchExpenses();
+            await fetchExpenses(date);
         }
     };
 
@@ -75,12 +75,16 @@ export default function Dashboard() {
         }
     }
 
+    const totalExpenses = monthExpenses.reduce((sum,exp)=>sum + exp.amount,0)
+    const totalIncomes = incomes.reduce((sum,exp)=>sum + exp.amount,0)
+    const balance = totalIncomes - totalExpenses
+
     return (
         <div className="container">
-            <Summary />
+            <Summary balance={balance} totalIncome={totalIncomes} totalExpenses={totalExpenses} />
             <Loader isActive={isLoading} />
 
-            <MonthNavigation onMonthChange={handleMonthChange} />
+            <MonthNavigation onMonthChange={(date:Date)=>handleMonthChange(date)} />
 
             <div className="chart-container">
                 <PieChart categoryData={categoryData} />
@@ -91,7 +95,7 @@ export default function Dashboard() {
             </div>
 
             <div>
-                <TransactionList transactions={monthExpenses} openDeleteModal={(id) => {
+                <TransactionList transactions={monthTransactions} openDeleteModal={(id) => {
                     setSsShowDeleteConfirmation(true)
                     setTransactionId(id)
                 }} />

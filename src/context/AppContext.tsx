@@ -13,6 +13,7 @@ export function AppProvider({ children }: AppProviderProps) {
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [expenses, setExpenses] = useState<Transaction[]>([]);
+  const [incomes, setIncomes] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState<boolean>(false);
@@ -79,6 +80,8 @@ export function AppProvider({ children }: AppProviderProps) {
     setCurrentDate,
     expenses,
     setExpenses,
+    incomes,
+    setIncomes,
     categories,
     setCategories,
     isLoading,

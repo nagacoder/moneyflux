@@ -56,7 +56,9 @@ export interface Transaction {
     currentDate: Date;
     setCurrentDate: (date: Date) => void;
     expenses: Transaction[];
+    incomes: Transaction[];
     setExpenses: (expenses: Transaction[]) => void;
+    setIncomes: (expenses: Transaction[]) => void;
     categories: Category[];
     setCategories: (categories: Category[]) => void;
     isLoading: boolean;

@@ -21,14 +21,12 @@ export async function getTransactions(
   apiKey: string, 
   dateFrom: string, 
   dateTo: string, 
-  type: 'expense' | 'income' = 'expense'
 ): Promise<Transaction[]> {
   try {
     const request = {
       action: "readTransactions",
       apiKey,
       filters: {
-        type,
         dateFrom,
         dateTo
       }
