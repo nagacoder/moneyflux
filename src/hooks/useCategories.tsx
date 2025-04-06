@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { getCategories as fetchCategoriesApi } from '@/lib/api';
 import { Category } from '@/types';

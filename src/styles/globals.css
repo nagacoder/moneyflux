@@ -1,10 +1,10 @@
 :root {
   /* Dark mode - modern dark blue theme */
-  --bg-primary: #081528;
-  --bg-secondary: #101f3b;
-  --text-primary: #f4f4f4;
-  --text-secondary: #b3b3b3;
-  --border: #04A46C;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FFFFFF;
+  --text-primary: #2e2e2e;
+  --text-secondary: #3e3e3e;
+  --border: #7CCCAC;
   --accent: #04A46C;
 }
 
