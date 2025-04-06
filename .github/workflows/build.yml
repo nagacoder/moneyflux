@@ -6,8 +6,8 @@ on:
     types: [opened, synchronize, closed]
   push:
     branches: [main]
-
-
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest
